@@ -1,0 +1,697 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand-accent: #6366f1;
+  }
+  body {
+    @apply font-sans antialiased text-gray-300 transition-colors duration-300;
+  }
+}
+
+/* Custom premium scrollbar style */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(11, 15, 25, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.4);
+}
+
+/* Cool minimal slider styling */
+input[type="range"].cool-slider {
+  -webkit-appearance: none;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+  margin: 6px 0;
+}
+
+input[type="range"].cool-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #818cf8; /* indigo-400 */
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.1s;
+}
+
+input[type="range"].cool-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+  background: #a5b4fc; /* indigo-300 */
+}
+
+/* Tiptap-specific styles and customization wrappers */
+.inkpack {
+  outline: none !important;
+}
+
+/* Custom Block Spacing inside Tiptap work area */
+.inkpack > * {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+/* Heading styles */
+.inkpack h1 { font-family: 'Outfit', sans-serif; font-size: 2.25em; font-weight: 800; color: #fff; line-height: 1.2; margin: 1.2rem 0 0.5rem; letter-spacing: -0.02em; }
+.inkpack h2 { font-family: 'Outfit', sans-serif; font-size: 1.6em;  font-weight: 700; color: #f3f4f6; line-height: 1.3; margin: 1rem 0 0.4rem; letter-spacing: -0.01em; }
+.inkpack h3 { font-family: 'Outfit', sans-serif; font-size: 1.25em; font-weight: 600; color: #e5e7eb; line-height: 1.4; margin: 0.85rem 0 0.35rem; }
+
+/* Ensure NodeViewWrapper figures don't clip toolbars */
+.inkpack figure, .inkpack div[data-video-block], .inkpack figure[data-image-block] {
+  overflow: visible !important;
+  position: relative;
+}
+
+/* Focused active block glowing indicator inside Draft mode */
+.inkpack-block-container {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.inkpack-block-container:hover {
+  background: rgba(59, 130, 246, 0.03);
+}
+
+/* Add custom focus glow ring around active blocks inside Draft mode */
+.inkpack-block-active {
+  background: rgba(59, 130, 246, 0.05) !important;
+  box-shadow: inset 2px 0 0 #3b82f6;
+}
+
+/* Styling lists, tables, callouts in editor viewports */
+.inkpack ul, .inkpack ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.inkpack ul {
+  list-style-type: disc;
+}
+
+.inkpack ol {
+  list-style-type: decimal;
+}
+
+.inkpack blockquote {
+  border-left: 4px solid #818cf8;
+  padding-left: 1rem;
+  font-style: italic;
+  background: rgba(129, 140, 248, 0.03);
+  margin: 1.5rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Placeholders inside Tiptap empty editor lines */
+.inkpack p.is-editor-empty:first-child::before {
+  color: #4b5563;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Premium glassmorphism utility classes */
+.glass-surface {
+  background: rgba(15, 22, 38, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-panel {
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease-in-out;
+}
+
+.glass-button:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Light paper mode scrollbar settings */
+.cream-mode ::-webkit-scrollbar-track {
+  background: #E8E5DF;
+}
+
+.cream-mode ::-webkit-scrollbar-thumb {
+  background: rgba(44, 43, 41, 0.2);
+}
+
+.cream-mode ::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 43, 41, 0.4);
+}
+
+/* ── Block Handle Overlay ──────────────────────────────────────────────────── */
+
+/* Drag ghost — block being dragged gets semi-transparent */
+.inkpack > *.block-dragging {
+  opacity: 0.35;
+  border-radius: 6px;
+  outline: 1px dashed rgba(99, 102, 241, 0.4);
+}
+
+/* Drop target indicator (handled via React inline, but CSS as fallback) */
+.block-drop-target {
+  border-top: 2px solid #6366f1;
+}
+
+/* Active dragging cursor on editor area */
+.inkpack[data-dragging="true"] {
+  cursor: grabbing !important;
+}
+
+/* Blade drop line animation */
+@keyframes dropline-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Callout Variants ───────────────────────────────────────────────────────── */
+
+.inkpack blockquote[class^="callout-"],
+.inkpack blockquote[class*=" callout-"] {
+  font-style: normal;
+  border-radius: 0 6px 6px 0;
+  padding: 0.75rem 1rem;
+}
+
+.inkpack blockquote.callout-info {
+  border-left: 4px solid #3b82f6;
+  background: rgba(59, 130, 246, 0.06);
+  color: #93c5fd;
+}
+
+.inkpack blockquote.callout-tip {
+  border-left: 4px solid #10b981;
+  background: rgba(16, 185, 129, 0.06);
+  color: #6ee7b7;
+}
+
+.inkpack blockquote.callout-warning {
+  border-left: 4px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.06);
+  color: #fcd34d;
+}
+
+.inkpack blockquote.callout-danger {
+  border-left: 4px solid #ef4444;
+  background: rgba(239, 68, 68, 0.06);
+  color: #fca5a5;
+}
+
+/* Cream mode overrides for callouts, blockquotes, code blocks, headings and placeholders */
+.cream-mode .inkpack h1 { color: #000000 !important; }
+.cream-mode .inkpack h2 { color: #111111 !important; }
+.cream-mode .inkpack h3 { color: #222222 !important; }
+
+.cream-mode .inkpack blockquote.callout-info {
+  color: #1e40af !important; /* dark blue-800 */
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+.cream-mode .inkpack blockquote.callout-tip {
+  color: #065f46 !important; /* dark green-800 */
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+
+.cream-mode .inkpack blockquote.callout-warning {
+  color: #92400e !important; /* dark amber-800 */
+  background: rgba(245, 158, 11, 0.08) !important;
+}
+
+.cream-mode .inkpack blockquote.callout-danger {
+  color: #991b1b !important; /* dark red-800 */
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+.cream-mode .inkpack blockquote:not([class*="callout"]) {
+  color: #4b5563 !important; /* dark gray-600 */
+  background: rgba(99, 102, 241, 0.04) !important;
+}
+
+/* Cream theme overrides for custom quotes block */
+.cream-mode .quote-block-container blockquote {
+  background: rgba(99, 102, 241, 0.05) !important;
+  border-left-color: rgba(99, 102, 241, 0.8) !important;
+}
+
+.cream-mode .quote-block-container .quote-watermark {
+  color: rgba(99, 102, 241, 0.35) !important; /* Make quote icon watermark darker */
+}
+
+.cream-mode .quote-block-container .quote-content-text {
+  color: #1a1a1a !important; /* Make quote text black / extremely dark */
+}
+
+.cream-mode .quote-block-container .quote-author-input {
+  color: #4f46e5 !important; /* Make author text darker indigo */
+  border-bottom-color: rgba(99, 102, 241, 0.3) !important;
+  placeholder-color: #9ca3af !important;
+}
+
+/* Cream theme overrides for custom code blocks */
+.cream-mode .code-block-wrapper {
+  background-color: #ffffff !important; /* Make it white background */
+  border-color: rgba(44, 43, 41, 0.16) !important; /* Darker border */
+  box-shadow: 0 10px 15px -3px rgba(44, 43, 41, 0.05), 0 4px 6px -2px rgba(44, 43, 41, 0.05) !important;
+}
+
+.cream-mode .code-block-wrapper .code-block-header {
+  background-color: #f6f5f0 !important; /* light grey/cream header */
+  border-bottom-color: rgba(44, 43, 41, 0.12) !important;
+  color: #4b4943 !important; /* dark grey text */
+}
+
+.cream-mode .code-block-wrapper .code-block-copy-btn {
+  color: #4b4943 !important;
+}
+
+.cream-mode .code-block-wrapper .code-block-copy-btn:hover {
+  background-color: rgba(44, 43, 41, 0.08) !important;
+  color: #000000 !important;
+}
+
+.cream-mode .code-block-wrapper .code-block-pre {
+  background-color: #ffffff !important; /* white background inside pre */
+  color: #1f2937 !important; /* default dark text */
+}
+
+.cream-mode .code-block-wrapper .code-block-pre code,
+.cream-mode .code-block-wrapper .hljs {
+  color: #1f2937 !important; /* default dark text */
+  background-color: #ffffff !important; /* force white background */
+}
+
+/* Syntax highlighting adjustments inside light code blocks */
+.cream-mode .code-block-wrapper .hljs-keyword,
+.cream-mode .code-block-wrapper .hljs-selector-tag {
+  color: #d97706 !important; /* Dark amber/orange for keywords */
+  font-weight: 600;
+}
+
+.cream-mode .code-block-wrapper .hljs-string,
+.cream-mode .code-block-wrapper .hljs-number,
+.cream-mode .code-block-wrapper .hljs-literal {
+  color: #059669 !important; /* Emerald for strings & numbers */
+}
+
+.cream-mode .code-block-wrapper .hljs-comment {
+  color: #9ca3af !important; /* Soft grey for comments */
+  font-style: italic;
+}
+
+.cream-mode .code-block-wrapper .hljs-function,
+.cream-mode .code-block-wrapper .hljs-title {
+  color: #4f46e5 !important; /* Indigo for function declarations */
+}
+
+.cream-mode .inkpack p.is-editor-empty:first-child::before {
+  color: rgba(44, 43, 41, 0.45) !important;
+}
+
+/* ── Code Block language label ─────────────────────────────────────────────── */
+
+.inkpack pre {
+  background: rgba(11, 15, 25, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.inkpack pre code {
+  color: #86efac;
+  background: transparent;
+  padding: 0;
+}
+
+/* ── Focus Mode Overlay ─────────────────────────────────────────────────────── */
+
+.focus-mode {
+  isolation: isolate;
+}
+
+/* dim surrounding content in focus mode */
+.focus-mode .prose {
+  position: relative;
+  z-index: 41;
+}
+
+/* ── Slash menu container backdrop ─────────────────────────────────────────── */
+
+.slash-menu {
+  background: rgba(11, 15, 25, 0.97) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Smooth animate-fade-in for floating menus ─────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+/* ── animate-slide-up for drawer/modals ─────────────────────────────────────── */
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.2s ease-out forwards;
+}
+
+/* ── animate-pulse-subtle for status icons ──────────────────────────────────── */
+
+@keyframes pulseSlight {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-subtle {
+  animation: pulseSlight 2s ease-in-out infinite;
+}
+
+/* ── Task List (Todo) ───────────────────────────────────────────────────────── */
+
+.inkpack ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.inkpack ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+}
+
+.inkpack ul[data-type="taskList"] li > label {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.inkpack ul[data-type="taskList"] li > label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1.5px solid rgba(99, 102, 241, 0.5);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.inkpack ul[data-type="taskList"] li > label input[type="checkbox"]:checked {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+
+.inkpack ul[data-type="taskList"] li > label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 5px;
+  height: 8px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.inkpack ul[data-type="taskList"] li > div {
+  flex: 1;
+}
+
+.inkpack ul[data-type="taskList"] li[data-checked="true"] > div p {
+  text-decoration: line-through;
+  color: rgba(156, 163, 175, 0.6);
+}
+
+/* ── Text alignment ─────────────────────────────────────────────────────────── */
+
+.inkpack [style*="text-align: center"], .inkpack .text-center { text-align: center; }
+.inkpack [style*="text-align: right"],  .inkpack .text-right  { text-align: right; }
+.inkpack [style*="text-align: justify"],.inkpack .text-justify{ text-align: justify; }
+
+/* ── Underline mark ─────────────────────────────────────────────────────────── */
+
+.inkpack u { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── Highlight mark ─────────────────────────────────────────────────────────── */
+
+.inkpack mark {
+  background-color: rgba(245, 158, 11, 0.3);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ── Superscript / Subscript ────────────────────────────────────────────────── */
+
+.inkpack sup { vertical-align: super; font-size: 0.75em; }
+.inkpack sub { vertical-align: sub;   font-size: 0.75em; }
+
+/* ── Link style ─────────────────────────────────────────────────────────────── */
+
+.inkpack a {
+  color: #818cf8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.inkpack a:hover { color: #a5b4fc; }
+
+/* ── Table Styles ───────────────────────────────────────────────────────────── */
+.inkpack table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 1rem 0;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.inkpack td, .inkpack th {
+  box-sizing: border-box;
+  min-width: 1em;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 8px 12px;
+  vertical-align: top;
+  position: relative;
+  font-size: 0.875rem;
+  color: #d1d5db;
+  transition: background 0.15s;
+}
+
+.inkpack th {
+  background: rgba(99,102,241,0.12);
+  color: #a5b4fc;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 1px solid rgba(99,102,241,0.25);
+}
+
+.inkpack td:hover, .inkpack th:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.inkpack .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(99,102,241,0.15);
+  border: 2px solid rgba(99,102,241,0.5);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.inkpack .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgba(99,102,241,0.6);
+  cursor: col-resize;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.inkpack td:hover .column-resize-handle,
+.inkpack th:hover .column-resize-handle {
+  opacity: 1;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ── Quote watermark (blockquote ONLY, not callouts) ────────────────────── */
+.inkpack blockquote:not([class*="callout"]) { position:relative; border-left:3px solid rgba(99,102,241,0.5); background:rgba(99,102,241,0.05); border-radius:0 10px 10px 0; padding:1rem 1.25rem 1rem 2rem; margin:1rem 0; color:#9ca3af; font-style:italic; overflow:hidden; }
+.inkpack blockquote:not([class*="callout"])::before { content:'\201C'; position:absolute; top:-0.1em; left:0.2rem; font-size:5em; font-family:Georgia,serif; color:rgba(99,102,241,0.13); line-height:1; pointer-events:none; user-select:none; }
+
+/* ── Table style presets ─────────────────────────────────────────────────── */
+.inkpack table[data-table-style="minimal"] td, .inkpack table[data-table-style="minimal"] th { border: none !important; border-bottom: 1px solid rgba(255,255,255,0.12) !important; }
+.cream-mode .inkpack table[data-table-style="minimal"] td, .cream-mode .inkpack table[data-table-style="minimal"] th { border-bottom: 1px solid rgba(44, 43, 41, 0.15) !important; }
+
+.inkpack table[data-table-style="bordered"] td, .inkpack table[data-table-style="bordered"] th { border: 2px solid rgba(255,255,255,0.15) !important; }
+.cream-mode .inkpack table[data-table-style="bordered"] td, .cream-mode .inkpack table[data-table-style="bordered"] th { border: 2px solid rgba(44, 43, 41, 0.2) !important; }
+
+.inkpack table[data-table-style="ghost"] td, .inkpack table[data-table-style="ghost"] th { border: none !important; background: transparent !important; }
+
+.inkpack table[data-table-style="striped"] tr:nth-child(even) td { background: rgba(255,255,255,0.04) !important; }
+.cream-mode .inkpack table[data-table-style="striped"] tr:nth-child(even) td { background: rgba(44, 43, 41, 0.04) !important; }
+
+.inkpack table[data-header-color="indigo"] th  { background: rgba(79,70,229,0.25) !important;  color: #a5b4fc !important; border-color: rgba(79,70,229,0.3) !important; }
+.inkpack table[data-header-color="emerald"] th { background: rgba(16,185,129,0.2) !important; color: #6ee7b7 !important; border-color: rgba(16,185,129,0.25) !important; }
+.inkpack table[data-header-color="amber"] th   { background: rgba(245,158,11,0.25) !important;  color: #fcd34d !important; border-color: rgba(245,158,11,0.3) !important; }
+.inkpack table[data-header-color="rose"] th    { background: rgba(244,63,94,0.25) !important;   color: #fda4af !important; border-color: rgba(244,63,94,0.3) !important; }
+.inkpack table[data-header-color="slate"] th   { background: rgba(100,116,139,0.25) !important; color: #cbd5e1 !important; border-color: rgba(100,116,139,0.3) !important; }
+.inkpack table[data-header-color="none"] th    { background: transparent !important; color: inherit !important; border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
+
+.cream-mode .inkpack table[data-header-color="indigo"] th  { background: rgba(79,70,229,0.15) !important;  color: #4f46e5 !important; border-color: rgba(79,70,229,0.2) !important; }
+.cream-mode .inkpack table[data-header-color="emerald"] th { background: rgba(16,185,129,0.15) !important; color: #059669 !important; border-color: rgba(16,185,129,0.2) !important; }
+.cream-mode .inkpack table[data-header-color="amber"] th   { background: rgba(245,158,11,0.15) !important;  color: #d97706 !important; border-color: rgba(245,158,11,0.2) !important; }
+.cream-mode .inkpack table[data-header-color="rose"] th    { background: rgba(244,63,94,0.15) !important;   color: #e11d48 !important; border-color: rgba(244,63,94,0.2) !important; }
+.cream-mode .inkpack table[data-header-color="slate"] th   { background: rgba(100,116,139,0.15) !important; color: #475569 !important; border-color: rgba(100,116,139,0.2) !important; }
+.cream-mode .inkpack table[data-header-color="none"] th    { background: transparent !important; color: inherit !important; border-bottom: 1px solid rgba(44, 43, 41, 0.12) !important; }
+
+.cream-mode .inkpack td, .cream-mode .inkpack th {
+  color: #2c2b29 !important;
+}
+.cream-mode .inkpack table:not([data-table-style]) td,
+.cream-mode .inkpack table:not([data-table-style]) th {
+  border: 1px solid rgba(44,43,41,0.12) !important;
+}
+.cream-mode .inkpack th {
+  background: rgba(79,70,229,0.08) !important;
+  color: #4f46e5 !important;
+  border-bottom: 1px solid rgba(79,70,229,0.18) !important;
+}
+.cream-mode .tableWrapper {
+  border: 1px solid rgba(44,43,41,0.12) !important;
+}
+
+input[type="range"] { accent-color:#6366f1; cursor:pointer; }
+
+/* ── Glassmorphic Responsive Panel Theme ───────────────────────────────────── */
+.theme-panel {
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark .theme-panel {
+  background: rgba(10, 14, 23, 0.78) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6) !important;
+  color: #d1d5db !important;
+}
+
+.cream-mode .theme-panel {
+  background: rgba(250, 248, 245, 0.85) !important;
+  border: 1px solid rgba(44, 43, 41, 0.12) !important;
+  box-shadow: 0 20px 25px -5px rgba(44, 43, 41, 0.15), 0 8px 10px -6px rgba(44, 43, 41, 0.15) !important;
+  color: #2c2b29 !important;
+}
+
+/* ── Autocomplete Ghost Text and Tab Keycap Button ───────────────────────── */
+@keyframes ghostFadeIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.autocomplete-ghost-container {
+  display: inline;
+  color: rgba(156, 163, 175, 0.55); /* Elegant gray with subtle transparency */
+  font-weight: 500;
+  font-style: italic;
+  pointer-events: none;
+  user-select: none;
+  vertical-align: baseline;
+  line-height: inherit;
+  animation: ghostFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cream-mode .autocomplete-ghost-container {
+  color: rgba(44, 43, 41, 0.45); /* Darker and more readable for cream theme */
+}
+
+.autocomplete-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+  text-transform: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #4b5563; /* Sleek gray-600 */
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 4px;
+  padding: 1px 4px !important;
+  margin-left: 4px;
+  vertical-align: sub !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.dark .autocomplete-tab-badge {
+  background-color: #1f2937; /* dark zinc/gray */
+  color: #d1d5db;
+  border-color: #4b5563;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.cream-mode .autocomplete-tab-badge {
+  background-color: #fffaf0; /* Warm almond/cream */
+  color: #5c4033;
+  border-color: rgba(92, 64, 51, 0.35);
+  box-shadow: 0 1px 1px rgba(92, 64, 51, 0.12), inset 0 -1px 0 rgba(92, 64, 51, 0.1);
+}
